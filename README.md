@@ -4,6 +4,21 @@ SongifyVox is an innovative voice conversion app powered by PyTorch, a cutting-e
 
 SongifyVox is an exciting voice conversion application that uses the power of AI to transform recorded voices into captivating songs. This repository contains the source code for the SongifyVox app, along with the necessary Dockerfile and requirements.txt file for easy installation.
 
+# How it works
+
+1. **Voice Input**: The process starts with the user providing a voice input, which could be in the form of spoken words, singing, humming, or any vocal expression.
+2. **Feature Extraction**: The input voice is analyzed, and relevant features are extracted, such as pitch, duration, and spectral characteristics. These features represent the unique characteristics of the user's voice.
+3. **Data Preprocessing**: Before feeding the voice data to the conversion model, it undergoes preprocessing to normalize and standardize the features, ensuring consistency and optimal performance during conversion.
+4. **Training Data**: A substantial amount of data is required to train the voice conversion model effectively. This data includes pairs of source voice (user's voice) and target voice (pre-recorded songs or a collection of different voices).
+5. **Voice Conversion Model**: The heart of the process is the voice conversion model, typically based on deep learning techniques such as Generative Adversarial Networks (GANs), Variational Autoencoders (VAEs), or other neural network architectures.
+6. **Learning Source-Target Mapping**: During training, the model learns the complex mapping between the source voice features (user's voice) and the corresponding target voice features (songs or other voices). This mapping allows the model to understand how to convert one voice into another convincingly.
+7. **Conversion**: Once the model is trained, the actual conversion takes place. The user's voice features are fed into the model, and it applies the learned transformation to generate the target voice features.
+8. **Synthesis**: The converted target voice features are synthesized to create the final output song. This synthesis involves reconstructing the vocal signals with the new target voice characteristics, resulting in a song that sounds like the user singing or speaking in the style of the target voice.
+9. **Post-Processing**: The output may go through additional post-processing steps to refine the converted voice, enhance audio quality, or remove any artifacts introduced during conversion.
+10. **Generated Song**: The end result is a fully transformed song or musical composition, which effectively reflects the user's voice while having the characteristics of the target voice or style.
+
+
+
 ## Installation
 
 To get started with SongifyVox, follow the steps below:
