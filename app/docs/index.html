@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Tracks App</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom styles can be added here */
+    body {
+      background-color: #000;
+    }
+    .app-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #000;
+    }
+
+    .app-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #000;
+      width: 200px;
+      height: 200px;
+    }
+
+    .element-group {
+      display: flex;
+      flex-direction: column;
+      margin-top: 15px;
+    }
+
+    .form-select,
+    .form-range {
+      background-color: #000;
+      color: #fff;
+    }
+
+    h1,
+    label,
+    p {
+      font-family: 'Arial', sans-serif;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .btn {
+      font-family: 'Arial', sans-serif;
+      font-size: 18px;
+    }
+
+    .file-input {
+      border: 2px dotted #fff;
+    }
+
+    .prompt {
+      background-color: #000;
+      color: #fff;
+      padding: 10px;
+      margin-top: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="container bg-dark">
+    <h1 class="display-4 text-white">Create AI Tracks 🎙️</h1>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="file-input bg-black text-white p-3">
+          <p>Select Audio File or drag and drop mp3/wav file here. 15MB Limit</p>
+          <input type="file" id="audio-file-input" class="form-control-file" accept=".mp3,.wav">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="element-group">
+          <label for="artist-dropdown" class="text-white">Select an artist:</label>
+          <select id="artist-dropdown" class="form-select">
+            <option value="">Select an artist</option>
+            <option value="JamesVO">JamesVO</option>
+            <option value="BritneySpearsRVC">BritneySpearsRVC</option>
+          </select>
+        </div>
+        <div class="element-group">
+          <label for="quality-dropdown" class="text-white">Quality:</label>
+          <select id="quality-dropdown" class="form-select">
+            <option value="">Select a quality</option>
+            <option value="dio">Dio</option>
+            <option value="pm">PM</option>
+            <option value="harvest">Harvest</option>
+            <option value="crepe">Crepe</option>
+            <option value="crepe-tiny">Crepe Tiny</option>
+          </select>
+        </div>
+        <div class="element-group">
+          <label for="pitch-slider" class="text-white">Pitch:</label>
+          <input type="range" id="pitch-slider" min="-12" max="12" value="0" step="1" class="form-range">
+       
+        </div>
+        <button id="remix-button" class="btn btn-primary mt-3">Remix</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    document.getElementById("remix-button").addEventListener("click", function() {
+      var artist = document.getElementById("artist-dropdown").value;
+      var quality = document.getElementById("quality-dropdown").value;
+      var pitch = parseInt(document.getElementById("pitch-slider").value);
+      var file = document.getElementById("audio-file-input").files[0];
+  
+      var promptElement = document.createElement("div");
+      promptElement.classList.add("prompt");
+  
+      if (artist === "" || quality === "" || pitch === 0 || !file) {
+        promptElement.textContent = "Please fill in all the fields.";
+      } else {
+        promptElement.textContent = "Fields successfully stored. Artist: " + artist + ", Quality: " + quality + ", Pitch: " + pitch + ", File: " + file.name;
+  
+        // Prepare the API request
+        var apiUrl = "https://127.0.0.1:8000/convert";
+        var formData = new FormData();
+        formData.append("pitch", pitch);
+        formData.append("model", artist);
+        formData.append("method", quality);
+        formData.append("creep_value", 0);
+        formData.append("file", file);
+  
+        // Make the API request using Axios
+        axios.post(apiUrl, formData)
+          .then(function(response) {
+            var result = response.data;
+            //var audioOptBytes = result.audio_opt;
+            var message = result.message;
+  
+            // Perform further actions with the received data (e.g., save the audio file)
+            // ...
+  
+            promptElement.textContent += "\nAPI response: " + message;
+  
+            // Create a download link for the audio output
+            var downloadLink = document.createElement("a");
+            downloadLink.href = URL.createObjectURL(new Blob([audioOptBytes]));
+            downloadLink.download = "output.wav";
+            downloadLink.textContent = "Download Output";
+            document.body.appendChild(downloadLink);
+          })
+          .catch(function(error) {
+            promptElement.textContent += "\nError occurred during API call.";
+            console.error(error);
+          });
+      }
+  
+      document.body.appendChild(promptElement);
+    });
+  </script>
+  
+
+</body>
+</html>
