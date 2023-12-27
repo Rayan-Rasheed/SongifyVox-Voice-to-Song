@@ -16,7 +16,19 @@ SongifyVox is an exciting voice conversion application that uses the power of AI
 8. **Synthesis**: The converted target voice features are synthesized to create the final output song. This synthesis involves reconstructing the vocal signals with the new target voice characteristics, resulting in a song that sounds like the user singing or speaking in the style of the target voice.
 9. **Post-Processing**: The output may go through additional post-processing steps to refine the converted voice, enhance audio quality, or remove any artifacts introduced during conversion.
 10. **Generated Song**: The end result is a fully transformed song or musical composition, which effectively reflects the user's voice while having the characteristics of the target voice or style.
-
+**Technology Used**
+Google Colab for AI artist training.
+Visual Studio Code for making APIs in Python(3.10)
+Pytorch and torch audio, torch creep for voice conversion and training
+Vultr Nvidia GPU with Intel CPU's for the deployment of the application.
+HTML, CSS, Javascript, and Bootstrap for Web Interface
+Docker for containerizing the application
+Following Python libraries are installation
+torch
+torchaudio
+torchcrepe==0.0.15
+torchgen==0.0.1
+numpy==1.23.5
 
 
 ## Installation
